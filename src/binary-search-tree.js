@@ -38,6 +38,19 @@ export default class BinarySearchTree {
     return null;
   }
 
+  removeNode(node, data) {
+    if (!node) return null;
+    if (data < node.data) { node.left = this.removeNode(node.left, data); return node; }
+    if (data > node.data) { node.right = this.removeNode(node.right, data); return node; }
+    if (!node.left) return node.right;
+    if (!node.right) return node.left;
+    let successor = node.right;
+    while (successor.left) successor = successor.left;
+    node.data = successor.data;
+    node.right = this.removeNode(node.right, successor.data);
+    return node;
+  }
+  
   remove(data) {
     this.rootNode = this.removeNode(this.rootNode, data);
   }
